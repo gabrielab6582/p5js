@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>p5js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+
+    <script>
+        var opacity;
+        // var backgroundcircle;
+
+        function setup() {
+            createCanvas(800, 600);
+            var diameter = 50;
+            opacity = 255
+
+
+        }
+
+        function draw() {}
+
+
+        function mouseMoved() {
+            diameter = random(10, 35); //the lenght and width of the rect
+            randomWH = random(2);
+            strokeWeight(0); // no color of the outline
+            stroke(0); //no outline
+            fill(random(0, 200), random(255), random(255)); //gives the rect color
+            rect(mouseX, mouseY, diameter * randomWH, diameter * randomWH); //rect that follow mouse
+            rect(width - mouseX, height - mouseY, diameter * randomWH, diameter * randomWH); //draws oppsite from the mouse x position
+
+
+
+        }
+
+
+
+        function keyPressed() {
+            console.log(opacity);
+            opacity -= 5; // var that will decrease 
+            background(random(230, 255), random(190, 255), random(180, 255), opacity); //random color for
+             // background with the transpacry increseing everytime a key is pressed
+
+            fill(random(240, 170), random(140, 155), random(180, 240), opacity); /*random color for
+             background with the transpacry increseing everytime a key is pressed*/
+
+            if (keyCode == ENTER) {      //when the key enter is pressed it will draw a rectangle
+                rect(400, 360, 400, 450)
+            }
+
+            else {   //if another key then enter is pressed an ellipse will be drawn
+                ellipse(300, 300, 500, 500)
+
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/gabrielab6582/p5js/blob/master/interactive-project.html?footer=0"></script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+</body>
+
+
+</html>
