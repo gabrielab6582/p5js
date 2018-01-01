@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Pong</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/p5.js"></script>
+    <script>
+        var ballX;
+        var ballY;
+        var ballSpeedX = 5;
+        var ballSpeedY = 5;
+        var paddleHeight = 30;
+        var score = 0;
+        var y = 400
+
+
+
+        function setup() {
+            createCanvas(600, 600);
+            noCursor(); //mouse will disapear when on canvas
+            ballX = random(width); //random location on the x 
+            ballY = random(height / 2); //random location on the top half of the canvas.
+        }
+
+        function draw() {
+            background(128); //dark grey
+            stroke(0, 0, 255)
+            line(0, y, 600, y)
+            stroke(0)
+            textSize(20)
+            text(score, 50, 100)
+            moveBall();
+            checkCollide();
+            drawPaddle();
+            drawBall();
+            shrinkgrow()
+            winlose()
+
+
+        }
+
+        function moveBall() {
+            ballX = ballX + ballSpeedX; //the ball will move inthe right direction 5 pixles
+            ballY = ballY + ballSpeedY; // the ball will moveing up 5 pixles
+
+            console.log("ballSpeedX: " + ballSpeedX + //will show location of ball in console
+                ", ballSpeedY: " + ballSpeedY);
+        }
+
+        function checkCollide() {
+            if (ballX < 0 || ballX > width) { //if the ball touches the left or right side of the canvas...
+                ballSpeedX = ballSpeedX * -1; //... the ball will flip is "x" direction, left-right or right-left.
+            }
+            if (ballY < 0) { //if the ball touches the top of the canvas...
+                ballSpeedY = ballSpeedY * -1; //...change its "y" direction to up-down 
+            }
+            if (ballY > height - paddleHeight) { //if ball is above the paddle...
+                if (ballX > mouseX && ballX < mouseX + 200) { //... and if it touches the paddle...
+                    score++
+                    ballSpeedY = ballSpeedY * -1; //...the ball will flip its "y" direction from down to up.
+
+
+
+                }
+                else {
+                    text("GAME OVER!", width / 2, height / 2); // 
+                    noLoop(); // game will stop
+                }
+            }
+        }
+
+        function drawBall() {
+            noStroke();
+            ellipse(ballX, ballY, 20, 20); //location is random on the x, and random only on the top half of the canvas
+        }
+
+        function drawPaddle() {
+            strokeWeight(4);
+            rect(mouseX, height - paddleHeight - 4, 200, paddleHeight); //rct will follow mouse right and left only
+        }
+
+        function shrinkgrow() {
+            if (ballX > mouseX && ballX < mouseX + 200 && ballY > height - paddleHeight) {
+                paddleHeight -= 15 //When the ball touches the paddle take away 15 pixles away from current height of the paddle.
+            }
+            if (ballY < height / 2) {
+                paddleHeight += .43 //When the ball is at the top half of the canvas the paddle grows .43 pixles.
+            }
+        }
+
+        function winlose() {
+            if (score == 5 && height - paddleHeight - 4 >= y) {
+               score++
+                text("You Win!", 300, 100) //
+                noLoop()
+                /* if the ball hits the paddle 5 times and the paddleheight is
+                less than or reaches the blue line than the ball will stop moving and you win!*/
+            }
+
+            if (height - paddleHeight - 4 < y) {
+                text("Game Over!", 300, 100)
+                noLoop()
+                /* if the paddle height goes over the blue line without having 5 points the game will
+                stop and you lose*/
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+<form><input TYPE="button" onClick="history.go(0)" value="Reset"></form>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/gabrielab6582/p5js/blob/master/pong-remix.html?footer=0"></script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+</body>
+
+
+</html>
