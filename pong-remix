@@ -90,7 +90,7 @@
 
         function winlose() {
             if (score == 5 && height - paddleHeight - 4 >= y) {
-               score++
+                score++
                 text("You Win!", 300, 100) //
                 noLoop()
                 /* if the ball hits the paddle 5 times and the paddleheight is
@@ -109,7 +109,7 @@
 </head>
 
 <body>
-<form><input TYPE="button" onClick="history.go(0)" value="Reset"></form>
+    <form><input TYPE="button" onClick="history.go(0)" value="Reset"></form>
     <div id="code" class="container-fluid">
         <script src="https://gist-it.appspot.com/github/gabrielab6582/p5js/blob/master/pong-remix.html?footer=0"></script>
     </div>
