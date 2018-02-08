@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>p5js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+
+    <script>
+        var drops = [];
+        var bug
+        var drop
+
+        function setup() {
+            bug = new Bug()
+            createCanvas(500, 500);
+            for (i = 0; i < 20; i++) {
+                drops.push(new drop()) // pushes 20 new drops to the array
+            }
+        }
+
+        function draw() {
+
+            background(230, 168, 159);  //pink/orange
+            bug.move()
+            bug.display()
+            for (var i = 0; i < drops.length; i++) {
+                drops[i].display();     // display the 20 drops in the array on the canvas
+
+                if (drops[i].collide() == true) {   //if the bug touches the drop, remove that drop off the screen. 
+                    drops.splice(i, 1)
+                }
+            }
+        }
+
+        function drop() {
+            this.x = random(width);
+            this.y = random(height);
+            this.r = 0
+            this.g = 0
+            this.b = 255
+
+            this.display = function() {
+                stroke(0, 0, 255);
+                fill(this.r, this.g, this.b);
+                ellipse(this.x, this.y, 30, 30);
+            }
+
+
+            this.collide = function() {
+                if (bug.y > this.y && bug.y < this.y + 15 && bug.x > this.x && bug.x < this.x + 15) {   // if the bug touches any of the drops 
+                    return true                                                                         // set equal to true for the condtional above to work
+                }
+            }
+        }
+
+
+        function keyPressed() {
+            if (keyCode == UP_ARROW) {      //bug wil move up 
+                bug.checkMove(0, -1)
+            }
+            else if (keyCode == DOWN_ARROW) {     //bug will move down 
+                bug.checkMove(0, 1)
+            }
+            else if (keyCode == RIGHT_ARROW) {  //bug will move right
+                bug.checkMove(1, 0)
+            }
+            else if (keyCode == LEFT_ARROW) {   //bug will move left
+                bug.checkMove(-1, 0)
+            }
+        }
+
+        function Bug() {
+            this.x = 0
+            this.y = 0
+            this.xspeed = 0;
+            this.yspeed = 0;
+
+            this.display = function() {
+                fill(250, 140, 50)
+                ellipseMode(CORNER)
+                ellipse(this.x, this.y, 20, 20)
+            }
+
+            this.move = function() {
+                this.x = this.x + this.xspeed;    // gives the bug a speed to move at in x and y.
+                this.y = this.y + this.yspeed;          //  **It doesnt move until the function this.checkMove is changed**
+            }
+            this.checkMove = function(x, y) {   // according to the key pressed the x or y values will change to make the bug move
+                this.xspeed = x
+                this.yspeed = y
+            }
+        }
+    </script>
+</head>
+
+<body>
+<form><input TYPE="button" onClick="history.go(0)" value="Reset"></form>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/gabrielab6582/p5js/blob/master/final-project.html?footer=0"></script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+</body>
+
+
+
+</html>
